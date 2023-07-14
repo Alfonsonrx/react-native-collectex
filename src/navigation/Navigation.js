@@ -44,7 +44,7 @@ const Navigation = () => {
 const renderPokeball = () => {
   return (
     <Image
-      source={require('../assets/pokeball.png')}
+      source={require('../assets/collectball.png')}
       style={{ width: 45, height: 45, top: -15 }}
     />
   )

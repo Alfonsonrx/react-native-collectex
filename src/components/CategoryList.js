@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, StyleSheet, FlatList } from 'react-native';
 import CategoryDropdown from './CategoryDropdown';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const CategoryList = (props) => {
   const {categories} = props;

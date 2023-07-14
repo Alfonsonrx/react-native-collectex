@@ -1,9 +1,9 @@
 import React from 'react';
-import { Text, FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
+import MiniatureCard from './MiniatureCard';
 
 const MiniatureList = (props) => {
   const { miniatures } = props;
-  console.log(miniatures)
   return (
     <FlatList
       data={miniatures}
@@ -11,11 +11,15 @@ const MiniatureList = (props) => {
       showsVerticalScrollIndicator={false}
       keyExtractor={(miniature) => String(miniature.id)}
       renderItem={({ item }) => <MiniatureCard miniature={item} />}
-      contentContainerStyle={styles.flatListContentContainer} 
-      />
+      contentContainerStyle={styles.flatListContentContainer}
+    />
   );
 }
 
-const styles=StyleSheet.create({flatListContentContainer:{paddingHorizontal:5,},});
+const styles = StyleSheet.create({ 
+  flatListContentContainer: { 
+    paddingHorizontal: 5,
+  }, 
+});
 
 export default MiniatureList;
