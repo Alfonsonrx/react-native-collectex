@@ -21,7 +21,7 @@ const Collectex = (props) => {
         categoriesArr.push(category);
       }
 
-      setCategories([...categories, ...categoriesArr]);
+      setCategories([...categoriesArr]);
     } catch (err) {
       console.log(err);
     }
@@ -29,7 +29,7 @@ const Collectex = (props) => {
 
   return (
     <SafeAreaView>
-      <CategoryList categories={categories}  navigation={props.navigation} />
+      <CategoryList categories={categories} />
     </SafeAreaView>
   );
 }

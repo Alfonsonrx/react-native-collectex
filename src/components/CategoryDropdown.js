@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { SelectList } from 'react-native-dropdown-select-list'
+import { useNavigation } from '@react-navigation/native';
 
 const colors = [
   '#f47022',
@@ -11,9 +12,10 @@ const colors = [
 ]
 
 const CategoryDropdown = (props) => {
-  const { navigation, category } = props;
+  const { category } = props;
   const [selected, setSelected] = useState("");
   const [reset, setReset] = useState(0);
+  const navigation = useNavigation(); 
 
   const subCategories = category.subcategories?.map((e) => (
     { key: e.id, value: e.name }

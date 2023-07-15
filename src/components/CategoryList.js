@@ -7,7 +7,7 @@ const CategoryList = (props) => {
   
   return (
     categories.map((c)=>{
-      return <CategoryDropdown key={c.id} category={c} navigation={props.navigation}/>
+      return <CategoryDropdown key={c.id} category={c} />
     })
   );
 }

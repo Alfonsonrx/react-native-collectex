@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import { SafeAreaView,StyleSheet,Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { SafeAreaView, StyleSheet, Text } from 'react-native';
 import MiniatureList from '../components/MiniatureList';
 import { getMiniaturesApi, getSubCategoriesDetailsById } from '../api/miniature';
 import { Link } from '@react-navigation/native';
@@ -8,6 +8,8 @@ const SubCatMin = ({ route }) => {
   const { mainCategory, subCategory } = route.params;
   const [miniatures, setMiniatures] = useState([])
   const [subDetails, setSubDetails] = useState({})
+  const [isNext, setIsNext] = useState(true)
+
   useEffect(() => {
     (async () => {
       await loadMiniatures();
@@ -24,10 +26,28 @@ const SubCatMin = ({ route }) => {
       console.log(err);
     }
   }
+  const verifyMore = async () => {
+    try {
+      const response = await getMiniaturesApi(mainCategory, subCategory, limit = miniatures.length + 1, offset = miniatures.length);
+      const miniaturesArr = [];
+
+      for await (const category of response) {
+        miniaturesArr.push(category);
+      }
+
+      setIsNext(miniaturesArr.length>0);
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   const loadMiniatures = async () => {
     try {
-      const response = await getMiniaturesApi(mainCategory, subCategory);
+      const response = await getMiniaturesApi(mainCategory, subCategory, limit = miniatures.length + 10, offset = miniatures.length);
       const miniaturesArr = [];
+
+      verifyMore();
 
       for await (const category of response) {
         miniaturesArr.push(category);
@@ -44,10 +64,10 @@ const SubCatMin = ({ route }) => {
   return (
     <SafeAreaView>
       <Text style={categoryStyle}>
-        <Link to={{screen: 'Collectex'}}>{subDetails.category_name}</Link>
+        <Link to={{ screen: 'Collectex' }}>{subDetails.category_name}</Link>
         <Text> --&gt; {subDetails.name}</Text>
       </Text>
-      <MiniatureList miniatures={miniatures} />
+      <MiniatureList miniatures={miniatures} loadMiniatures={loadMiniatures} isNext={isNext}/>
     </SafeAreaView>
   );
 }

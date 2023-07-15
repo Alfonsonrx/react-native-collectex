@@ -6,6 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 const colors = [
   '#f47022',
@@ -18,14 +19,15 @@ const colors = [
 
 export default function MiniatureCard(props) {
   const { miniature } = props;
+  const navigation = useNavigation();
 
   const goToMiniature = () => {
     console.log(`Vamos a la miniatura: ${miniature.name}`);
-    console.log(miniature.id);
+    navigation.navigate({ name: 'Miniature', params: {miniature} });
   };
 
   const bgStyles = {
-    backgroundColor: colors[miniature.category-1], ...styles.bgStyles
+    backgroundColor: colors[miniature.category - 1], ...styles.bgStyles
   };
 
   return (
@@ -37,7 +39,7 @@ export default function MiniatureCard(props) {
               #{`${miniature.id}`.padStart(3, 0)}
             </Text>
             <Text style={styles.name}>{miniature.name}</Text>
-            <Image source={{ uri: miniature.image?miniature.image:"https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg" }} style={styles.image} />
+            <Image source={{ uri: miniature.images.length ? miniature.images[0] : "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg" }} style={styles.image} />
           </View>
         </View>
       </View>
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#00ae5c",
     position: "absolute",
-    resizeMode:'contain',
+    resizeMode: 'contain',
     bottom: 3,
     right: 3,
     width: 90,
