@@ -16,7 +16,6 @@ import { user, userDetails } from '../../utils/userDB';
 const LoginForm = () => {
   const [error, setError] = useState("");
   const { login, userData } = useAuth();
-  console.log(userData);
 
   const formik = useFormik({
     initialValues: initialValues(),
