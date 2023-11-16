@@ -4,7 +4,17 @@ import { getCategoriesApi } from '../api/miniature';
 import CategoryList from '../components/CategoryList';
 
 const Collectex = (props) => {
+  const {
+    navigation,
+    route: { params },
+  } = props;
   const [categories, setCategories] = useState([])
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitleAlign: 'center',
+    })
+  }, [navigation, params])
 
   useEffect(() => {
     (async () => {

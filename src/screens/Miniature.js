@@ -5,6 +5,8 @@ import { StyleSheet } from 'react-native';
 import { Link } from '@react-navigation/native';
 import Header from '../components/Miniature/Header';
 import Description from '../components/Miniature/Description';
+import Favorite from '../components/Miniature/Favorite';
+import useAuth from '../hooks/useAuth';
 
 const colors = [
   '#f47022',
@@ -16,9 +18,22 @@ const colors = [
 ]
 
 const Miniature = (props) => {
-  const { navigation } = props;
+  const {
+    navigation,
+    route: { params },
+  } = props;
   const { miniature } = props.route.params;
   const [subDetails, setSubDetails] = useState({})
+  const auth = useAuth();
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: "",
+      headerRight: () => (
+        (auth ? <Favorite miniatureId={miniature?.id} /> : null)
+      ),
+    });
+  }, [navigation, params, miniature])
 
   useEffect(() => {
     (async () => {
@@ -40,29 +55,29 @@ const Miniature = (props) => {
   let date = new Date(miniature.created);
   let is_new = date.getTime() > oneDay;
 
-  const categoryStyle = Object.keys(subDetails).length ? {color: colors[miniature.category - 1],...styles.navText} : { display: 'none', ...styles.navText };
+  const categoryStyle = Object.keys(subDetails).length ? { color: colors[miniature.category - 1], ...styles.navText } : { display: 'none', ...styles.navText };
 
   return (
     <SafeAreaView>
       <Text style={categoryStyle}>
         <Link to={{ screen: 'Collectex' }}>{subDetails.category_name}</Link>
         <Text> --&gt; </Text>
-        <Link to={{ 
-          screen: 'SubCategory', 
-          params: { 
-            mainCategory: miniature.category, 
-            subCategory: miniature.subcategory 
-          } 
+        <Link to={{
+          screen: 'SubCategory',
+          params: {
+            mainCategory: miniature.category,
+            subCategory: miniature.subcategory
+          }
         }}>{subDetails.name}</Link>
       </Text>
       <Header
         name={miniature.name}
         id={miniature.id}
-        image={ miniature.images.length ? miniature.images[0] : "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg" }
+        image={miniature.images.length ? miniature.images[0] : "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg"}
         is_new={is_new}
         color={colors[miniature.category - 1]}
       />
-      <Description 
+      <Description
         width={miniature.width}
         height={miniature.height}
         diet={miniature.diet}
