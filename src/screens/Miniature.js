@@ -30,7 +30,7 @@ const Miniature = (props) => {
     navigation.setOptions({
       title: "",
       headerRight: () => (
-        (auth ? <Favorite miniatureId={miniature?.id} /> : null)
+        (auth.userData ? <Favorite miniatureId={miniature?.id} /> : null)
       ),
     });
   }, [navigation, params, miniature])
