@@ -1,6 +1,7 @@
 import { SafeAreaView, Text } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { getMiniatureDetailsById, getSubCategoriesDetailsById } from '../api/miniature';
+import Icon from "react-native-vector-icons/FontAwesome5";
+import { getSubCategoriesDetailsById } from '../api/miniature';
 import { StyleSheet } from 'react-native';
 import { Link } from '@react-navigation/native';
 import Header from '../components/Miniature/Header';
@@ -31,6 +32,15 @@ const Miniature = (props) => {
       title: "",
       headerRight: () => (
         (auth.userData ? <Favorite miniatureId={miniature?.id} /> : null)
+      ),
+      headerLeft: () => (
+        <Icon
+          name="arrow-left"
+          color="#fff"
+          size={20}
+          style={{ marginLeft: 20 }}
+          onPress={navigation.goBack}
+        />
       ),
     });
   }, [navigation, params, miniature])

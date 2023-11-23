@@ -1,7 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5'
-import FavoriteScreen from '../screens/Favorite';
+// import FavoriteScreen from '../screens/Favorite';
+import FavoriteNavigation from './FavoriteNavigation';
 import Account from '../screens/Account';
 import CollectexNavigation from './CollectexNavigation';
 import { Image } from 'react-native';
@@ -11,10 +12,9 @@ const Tab = createBottomTabNavigator();
 const Navigation = () => {
   return (
     <Tab.Navigator initialRouteName='CollectexNav'>
-      <Tab.Screen name="Favorite" component={FavoriteScreen} options={{
-        headerTitle: "Favoritos",
-        headerTitleAlign: 'center',
+      <Tab.Screen name="FavoriteNav" component={FavoriteNavigation} options={{
         tabBarLabel: "Favoritos",
+        headerShown: false,
         tabBarIcon: ({ color, size }) => (
           <Icon name="heart" color={color} size={size} />
         ),
@@ -25,6 +25,7 @@ const Navigation = () => {
         headerTitle: "Collectex",
         headerTitleAlign: 'center',
         tabBarLabel: "",
+        headerShown: false,
         tabBarIcon: () => renderPokeball()
       }} />
       <Tab.Screen name="Account" component={Account} options={{

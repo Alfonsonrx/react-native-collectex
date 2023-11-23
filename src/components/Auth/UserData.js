@@ -1,8 +1,27 @@
+import React, { useState, useEffect, useCallback } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
+import { size } from 'lodash';
 import useAuth from '../../hooks/useAuth';
+import { getMiniatureFavoriteApi } from '../../api/favorite';
+import { useFocusEffect } from '@react-navigation/native';
 
 const UserData = () => {
   const { userData, logout } = useAuth();
+  const [total, setTotal] = useState(0)
+
+  useFocusEffect(
+    useCallback(() => {
+      (async () => {
+        try {
+          const response = await getMiniatureFavoriteApi();
+          setTotal(size(response));
+        } catch (error) {
+          setTotal(0);
+        }
+      })();
+    }, [])
+  );
+
   return (
     <View style={styles.content}>
       <View style={styles.titleBlock}>
@@ -15,7 +34,7 @@ const UserData = () => {
         <ItemMenu title="Nombre" text={`${userData.firstname} ${userData.lastname}`} />
         <ItemMenu title="Username" text={userData.username} />
         <ItemMenu title="Email" text={userData.email} />
-        <ItemMenu title="N° Favoritos" text={`0 favoritos`} />
+        <ItemMenu title="N° Favoritos" text={`${total} favoritos`} />
       </View>
       <View style={styles.btnBlock}>
         <Button title="Desconectarse" onPress={logout} />

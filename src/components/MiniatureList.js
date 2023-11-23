@@ -20,7 +20,7 @@ const MiniatureList = (props) => {
       keyExtractor={(miniature) => String(miniature.id)}
       renderItem={({ item }) => <MiniatureCard miniature={item} />}
       contentContainerStyle={flatListStyle}
-      onEndReached={loadMore}
+      onEndReached={isNext && loadMore}
       onEndReachedThreshold={0.1}
       ListFooterComponent={
         isNext && (
