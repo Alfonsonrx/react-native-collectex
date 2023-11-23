@@ -1,4 +1,4 @@
-import { API_URL } from '@env';
+import { API_URL } from "../utils/constants";
 import axios from "axios";
 
 export async function getMiniaturesApi(cat, subCat, limit = 20,offset = 0) {
